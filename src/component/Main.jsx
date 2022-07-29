@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  ADD_MORE_FIELD,
   CALCULATE_TOTAL_AMOUNT,
   GET_ALL_CALLCULATED_DATA,
   HANDLE_DELETE,
   HANDLE_INPUT,
 } from "../redux/invoceReducer/type";
+import InvoiceHeader from "./InvoiceHeader";
+import TableBody from "./TableBody";
 
 function Main() {
   const inputData = useSelector((state) => state.inputData);
@@ -14,18 +17,6 @@ function Main() {
   console.log(item_qty, item_rate);
 
   const dispatch = useDispatch();
-
-  function handleChange(e, id) {
-    const { name, value } = e.target;
-    dispatch({ type: HANDLE_INPUT, payload: { name, value, id } });
-    dispatch({ type: GET_ALL_CALLCULATED_DATA });
-    dispatch({ type: CALCULATE_TOTAL_AMOUNT });
-  }
-
-  function handleDelete(id) {
-    dispatch({ type: HANDLE_DELETE, payload: id });
-    dispatch({ type: CALCULATE_TOTAL_AMOUNT });
-  }
 
   useEffect(() => {
     dispatch({ type: GET_ALL_CALLCULATED_DATA });
@@ -36,10 +27,7 @@ function Main() {
     <div className="container py-5">
       <h1>Invoice</h1>
       <hr />
-      <div className="col-3">
-        <label htmlFor="">Name</label>
-        <input type="text" className="form-control" />
-      </div>
+      <InvoiceHeader />
       <hr />
 
       <table className="table">
@@ -54,14 +42,19 @@ function Main() {
           </tr>
         </thead>
         <tbody>
-          {inputData.map((item, index) => {
+          <TableBody />
+          {/* {inputData.map((item, index) => {
             const { id, item_name, item_qty, item_rate, total } = item;
-
             return (
               <tr key={id}>
                 <td> {id} </td>
                 <td>
-                  <input type="text" value={item_name} />
+                  <input
+                    type="text"
+                    value={item_name}
+                    name="item_name"
+                    onChange={(e) => handleChange(e, id)}
+                  />
                 </td>
                 <td>
                   <input
@@ -81,12 +74,14 @@ function Main() {
                 </td>
                 <td> {total} </td>
                 <td>
-                  <button>Add More</button>{" "}
+                  <button onClick={() => dispatch({ type: ADD_MORE_FIELD })}>
+                    Add More
+                  </button>{" "}
                   <button onClick={() => handleDelete(id)}>Delete</button>
                 </td>
               </tr>
             );
-          })}
+          })} */}
         </tbody>
         <tfoot>
           <tr>

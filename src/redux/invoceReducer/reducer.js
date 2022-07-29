@@ -1,4 +1,6 @@
 import {
+  ADD_DISCOUNT,
+  ADD_MORE_FIELD,
   CALCULATE_TOTAL_AMOUNT,
   GET_ALL_CALLCULATED_DATA,
   HANDLE_DELETE,
@@ -6,6 +8,13 @@ import {
 } from "./type";
 
 const initialState = {
+  invoiceHeaderFormValue: {
+    name: "",
+    dueDate: "",
+    SGST: 0,
+    IGST: 0,
+    discount: 0,
+  },
   formValue: {
     item_qty: "",
     item_rate: "",
@@ -25,6 +34,7 @@ const initialState = {
     },
   ],
   totalAmount: 0,
+  discount: 0,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -67,5 +77,30 @@ export const reducer = (state = initialState, action) => {
     let tempData = state.inputData.filter((item) => item.id != action.payload);
     return { ...state, inputData: tempData };
   }
+
+  if (action.type === ADD_MORE_FIELD) {
+    return {
+      ...state,
+      inputData: [
+        ...state.inputData,
+        {
+          id: new Date().getTime().toString(),
+          item_name: "",
+          item_qty: "",
+          item_rate: "",
+        },
+      ],
+    };
+  }
+
+  if (action.type === ADD_DISCOUNT) {
+    console.log(action.payload);
+
+    return {
+      ...state,
+      totalAmount: Number(state.totalAmount) + Number(action.payload),
+    };
+  }
+
   return state;
 };

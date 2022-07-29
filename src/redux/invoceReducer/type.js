@@ -4,3 +4,7 @@ export const HANDLE_QTY = "HANDLE_QTY";
 export const HANDLE_RATE = "HANDLE_RATE";
 export const CALCULATE_TOTAL_AMOUNT = "CALCULATE_TOTAL_AMOUNT";
 export const HANDLE_DELETE = "HANDLE_DELETE";
+export const ADD_MORE_FIELD = "ADD_MORE_FIELD";
+export const ADD_DISCOUNT = "ADD_DISCOUNT";
+export const ADD_SGST = "ADD_SGST";
+export const ADD_IGST = "ADD_IGST";
