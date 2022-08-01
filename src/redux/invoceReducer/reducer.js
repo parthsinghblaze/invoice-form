@@ -1,10 +1,14 @@
 import {
   ADD_DISCOUNT,
+  ADD_IGST,
   ADD_MORE_FIELD,
+  ADD_SGST,
   CALCULATE_TOTAL_AMOUNT,
   GET_ALL_CALLCULATED_DATA,
+  HANDLE_DATE,
   HANDLE_DELETE,
   HANDLE_INPUT,
+  HANDLE_NAME,
 } from "./type";
 
 const initialState = {
@@ -99,6 +103,56 @@ export const reducer = (state = initialState, action) => {
     return {
       ...state,
       totalAmount: Number(state.totalAmount) + Number(action.payload),
+      invoiceHeaderFormValue: {
+        ...state.invoiceHeaderFormValue,
+        discount: action.payload,
+      },
+    };
+  }
+
+  if (action.type === ADD_IGST) {
+    let tempAmount = (state.totalAmount * action.payload) / 100;
+    console.log(tempAmount);
+
+    return {
+      ...state,
+      invoiceHeaderFormValue: {
+        ...state.invoiceHeaderFormValue,
+        IGST: action.payload,
+      },
+      totalAmount: state.totalAmount + tempAmount,
+    };
+  }
+
+  if (action.type === ADD_SGST) {
+    let tempAmount = (state.totalAmount * action.payload) / 100;
+    return {
+      ...state,
+      invoiceHeaderFormValue: {
+        ...state.invoiceHeaderFormValue,
+        SGST: action.payload,
+      },
+      totalAmount: state.totalAmount + tempAmount,
+    };
+  }
+
+  if (action.type === HANDLE_DATE) {
+    return {
+      ...state,
+      invoiceHeaderFormValue: {
+        ...state.invoiceHeaderFormValue,
+        dueDate: action.payload,
+      },
+    };
+  }
+
+  if (action.type === HANDLE_NAME) {
+    return {
+      ...state,
+      invoiceHeaderFormValue: {
+        ...state.invoiceHeaderFormValue,
+        name: action.payload,
+      },
     };
   }
 

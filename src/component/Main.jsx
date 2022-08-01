@@ -86,7 +86,7 @@ function Main() {
         <tfoot>
           <tr>
             <td colSpan="5" className="text-end">
-              Total Amount : {totalAmount}
+              Total Amount : {totalAmount.toFixed(2)}
             </td>
           </tr>
         </tfoot>

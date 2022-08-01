@@ -8,3 +8,5 @@ export const ADD_MORE_FIELD = "ADD_MORE_FIELD";
 export const ADD_DISCOUNT = "ADD_DISCOUNT";
 export const ADD_SGST = "ADD_SGST";
 export const ADD_IGST = "ADD_IGST";
+export const HANDLE_DATE = "HANDLE_DATE";
+export const HANDLE_NAME = "HANDLE_NAME";
