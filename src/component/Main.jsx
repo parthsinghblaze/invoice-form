@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  ADD_DATA,
   ADD_MORE_FIELD,
   CALCULATE_TOTAL_AMOUNT,
   GET_ALL_CALLCULATED_DATA,
   HANDLE_DELETE,
   HANDLE_INPUT,
 } from "../redux/invoceReducer/type";
-import InvoiceHeader from "./InvoiceHeader";
+import InvoiceHeader2 from "./InvoiceHeader2";
 import TableBody from "./TableBody";
 
 function Main() {
@@ -27,9 +28,8 @@ function Main() {
     <div className="container py-5">
       <h1>Invoice</h1>
       <hr />
-      <InvoiceHeader />
+      <InvoiceHeader2 />
       <hr />
-
       <table className="table">
         <thead>
           <tr>
@@ -91,6 +91,7 @@ function Main() {
           </tr>
         </tfoot>
       </table>
+      <button onClick={() => dispatch({ type: ADD_DATA })}>Add Data</button>
     </div>
   );
 }

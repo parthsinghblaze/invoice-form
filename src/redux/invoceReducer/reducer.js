@@ -1,4 +1,5 @@
 import {
+  ADD_DATA,
   ADD_DISCOUNT,
   ADD_IGST,
   ADD_MORE_FIELD,
@@ -7,11 +8,32 @@ import {
   GET_ALL_CALLCULATED_DATA,
   HANDLE_DATE,
   HANDLE_DELETE,
+  HANDLE_FORM,
+  HANDLE_FORM_VALUE,
   HANDLE_INPUT,
   HANDLE_NAME,
 } from "./type";
 
+function getLocalStorageData() {
+  let invoiceData = localStorage.getItem("invoiceData");
+
+  if (invoiceData) {
+    return JSON.parse(localStorage.getItem("invoiceData"));
+  } else {
+    return [];
+  }
+}
+
+getLocalStorageData();
+
 const initialState = {
+  formikForm: {
+    name: "",
+    dueDate: "",
+    SGST: 0,
+    IGST: 0,
+    discount: 0,
+  },
   invoiceHeaderFormValue: {
     name: "",
     dueDate: "",
@@ -23,25 +45,28 @@ const initialState = {
     item_qty: "",
     item_rate: "",
   },
-  inputData: [
-    {
-      id: 0,
-      item_name: "Item1",
-      item_qty: 10,
-      item_rate: 100,
-    },
-    {
-      id: 1,
-      item_name: "Item2",
-      item_qty: 2,
-      item_rate: 399,
-    },
-  ],
+  inputData: getLocalStorageData(),
   totalAmount: 0,
   discount: 0,
 };
 
 export const reducer = (state = initialState, action) => {
+  if (action.type === ADD_DATA) {
+    localStorage.setItem("invoiceData", JSON.stringify(state.inputData));
+  }
+
+  if (action.type === HANDLE_FORM_VALUE) {
+    return {
+      ...state,
+      formValue: { ...state.formValue, ...action.payload },
+      totalAmount:
+        state.totalAmount +
+        (state.totalAmount * action.payload.SGST) / 100 +
+        (state.totalAmount * action.payload.IGST) / 100 -
+        action.payload.discount,
+    };
+  }
+
   if (action.type === GET_ALL_CALLCULATED_DATA) {
     let calculatedTotalQtyAndRate = state.inputData.map((item) => {
       const { item_qty, item_rate } = item;

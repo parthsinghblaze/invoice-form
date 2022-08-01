@@ -10,3 +10,5 @@ export const ADD_SGST = "ADD_SGST";
 export const ADD_IGST = "ADD_IGST";
 export const HANDLE_DATE = "HANDLE_DATE";
 export const HANDLE_NAME = "HANDLE_NAME";
+export const HANDLE_FORM_VALUE = "HANDLE_FORM_VALUE";
+export const ADD_DATA = "ADD_DATA";
