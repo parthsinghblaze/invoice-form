@@ -60,7 +60,7 @@ function TableBody() {
             onChange={(e) => handleChange(e, id)}
           />
         </td>
-        <td> {total ? total : 0} </td>
+        <td> {total} </td>
         <td>
           <button onClick={() => dispatch({ type: ADD_MORE_FIELD })}>
             Add More

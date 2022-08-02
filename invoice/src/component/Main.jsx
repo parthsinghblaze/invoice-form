@@ -10,9 +10,6 @@ import {
 } from "../redux/invoceReducer/type";
 import InvoiceHeader2 from "./InvoiceHeader2";
 import TableBody2 from "./TableBody2";
-import { Formik, Form, FieldArray } from "formik";
-import * as Yup from "yup";
-import TableBody from "./TableBody";
 
 function Main() {
   const inputData = useSelector((state) => state.inputData);
@@ -30,7 +27,6 @@ function Main() {
   return (
     <div className="container py-5">
       <h1>Invoice</h1>
-
       <hr />
       <InvoiceHeader2 />
       <hr />
@@ -46,19 +42,7 @@ function Main() {
           </tr>
         </thead>
         <tbody>
-          {/* <TableBody /> */}
-          <Formik initialValues={inputData}>
-            <TableBody2 />
-          </Formik>
-          {/* <Formik
-            initialValues={{ tableData: inputData }}
-            onSubmit={(values) => console.log(values)}
-          >
-            <FieldArray
-              name="tableData"
-              render={(arrayHelpers) => <TableBody2 />}
-            ></FieldArray>
-          </Formik> */}
+          <TableBody2 />
           {/* {inputData.map((item, index) => {
             const { id, item_name, item_qty, item_rate, total } = item;
             return (

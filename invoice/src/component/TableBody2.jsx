@@ -7,18 +7,32 @@ import {
   HANDLE_DELETE,
   HANDLE_INPUT,
 } from "../redux/invoceReducer/type";
+import { useFormik } from "formik";
+
 function TableBody() {
   const inputData = useSelector((state) => state.inputData);
-  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
 
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.item_name) {
+      errors.item_name = "Required";
+    }
+
+    console.log(errors);
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: inputData,
+    validate,
+  });
+
   function handleChange(e, id) {
     const { name, value } = e.target;
-    setError(false);
-    if (value === "") {
-      setError(true);
-    }
 
     dispatch({ type: HANDLE_INPUT, payload: { name, value, id } });
     dispatch({ type: GET_ALL_CALLCULATED_DATA });
@@ -28,6 +42,10 @@ function TableBody() {
   function handleDelete(id) {
     dispatch({ type: HANDLE_DELETE, payload: id });
     dispatch({ type: CALCULATE_TOTAL_AMOUNT });
+  }
+
+  function handleError() {
+    formik.handleBlur();
   }
 
   return inputData.map((item, index) => {
@@ -41,8 +59,8 @@ function TableBody() {
             value={item_name}
             name="item_name"
             onChange={(e) => handleChange(e, id)}
+            onBlur={formik.handleBlur}
           />
-          {error ? "name is required" : null}
         </td>
         <td>
           <input
@@ -60,7 +78,7 @@ function TableBody() {
             onChange={(e) => handleChange(e, id)}
           />
         </td>
-        <td> {total ? total : 0} </td>
+        <td> {total} </td>
         <td>
           <button onClick={() => dispatch({ type: ADD_MORE_FIELD })}>
             Add More

@@ -8,11 +8,10 @@ import {
   GET_ALL_CALLCULATED_DATA,
   HANDLE_DATE,
   HANDLE_DELETE,
+  HANDLE_FORM,
   HANDLE_FORM_VALUE,
   HANDLE_INPUT,
   HANDLE_NAME,
-  HANDLE_TBODY_FORM_VALUE,
-  HANDLE_TBODY_FORM_VALUE_TOTAL_AMOUNT,
 } from "./type";
 
 function getLocalStorageData() {
@@ -21,14 +20,7 @@ function getLocalStorageData() {
   if (invoiceData) {
     return JSON.parse(localStorage.getItem("invoiceData"));
   } else {
-    return [
-      {
-        id: "1",
-      },
-      {
-        id: "2",
-      },
-    ];
+    return [];
   }
 }
 
@@ -61,26 +53,6 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   if (action.type === ADD_DATA) {
     localStorage.setItem("invoiceData", JSON.stringify(state.inputData));
-  }
-
-  if (action.type === HANDLE_TBODY_FORM_VALUE) {
-    console.log(action.payload);
-
-    let tempInputData = state.inputData.map((item) => {
-      if (item.id === action.payload.id) {
-        return {
-          ...item,
-          [action.payload.name]: action.payload.value,
-        };
-      } else {
-        return item;
-      }
-    });
-
-    return {
-      ...state,
-      inputData: tempInputData,
-    };
   }
 
   if (action.type === HANDLE_FORM_VALUE) {
@@ -119,9 +91,9 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === HANDLE_INPUT) {
-    const { name, value, id } = action.payload;
+    const { name, value } = action.payload;
     if (value === "") {
-      console.log(id);
+      alert("Please fill the value");
     }
     const tempInputData = state.inputData.map((item) => {
       if (item.id === action.payload.id) {
